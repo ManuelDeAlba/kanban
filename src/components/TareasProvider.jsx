@@ -45,7 +45,7 @@ function TareasProvider({ children }) {
         setTareas(prevTareas => [...prevTareas, nuevaTarea]);
         // Automáticamente abrir la ventana para editarla
         abrirModal(nuevaTarea);
-        setIsEditing(true);
+        handleEditar(nuevaTarea);
     };
 
     const editarTarea = (idTarea, nuevaTarea) => {
@@ -78,9 +78,12 @@ function TareasProvider({ children }) {
         setIsEditing(false);
     };
 
-    const handleEditar = () => {
+    const handleEditar = (nuevaTarea) => {
         setIsEditing(true);
-        setPrevTarea({ ...tarea });
+        // Si se le pasa una tarea nueva, se guarda como prevTarea para poder cancelar
+        // Si no, utiliza la tarea actual
+        if(nuevaTarea) setPrevTarea({ ...nuevaTarea });
+        else setPrevTarea({ ...tarea });
     };
 
     const handleCancelar = () => {
