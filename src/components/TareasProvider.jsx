@@ -9,7 +9,7 @@ export const useTareas = () => {
 };
 
 function TareasProvider({ children }) {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [tarea, setTarea] = useState(null);
     const [prevTarea, setPrevTarea] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
@@ -43,6 +43,9 @@ function TareasProvider({ children }) {
         };
 
         setTareas(prevTareas => [...prevTareas, nuevaTarea]);
+        // Automáticamente abrir la ventana para editarla
+        abrirModal(nuevaTarea);
+        setIsEditing(true);
     };
 
     const editarTarea = (idTarea, nuevaTarea) => {
@@ -66,8 +69,8 @@ function TareasProvider({ children }) {
     };
 
     const abrirModal = tarea => {
-        setOpen(true);
         setTarea(tarea);
+        setOpen(true);
     };
 
     const cerrarModal = e => {
@@ -118,70 +121,68 @@ function TareasProvider({ children }) {
                 cerrarModal,
             }}
         >
-            {tarea && (
+            <div
+                className={`fixed inset-0 w-full h-dvh bg-gray-900/15 flex justify-end items-center overflow-hidden ${
+                    !open ? "opacity-0 pointer-events-none delay-300" : ""
+                }`}
+            >
                 <div
-                    className={`fixed inset-0 w-full h-dvh bg-gray-900/15 flex justify-end items-center overflow-hidden ${
-                        !open ? "opacity-0 pointer-events-none delay-300" : ""
+                    className={`absolute bg-slate-500 w-[90%] max-w-sm h-full flex flex-col justify-center items-center p-8 text-white rounded-tl-lg rounded-bl-lg transition-transform ${
+                        !open ? "translate-x-full" : "translate-x-0"
                     }`}
                 >
-                    <div
-                        className={`absolute bg-slate-500 w-[90%] max-w-sm h-full flex flex-col justify-center items-center p-8 text-white rounded-tl-lg rounded-bl-lg transition-transform ${
-                            !open ? "translate-x-full" : "translate-x-0"
-                        }`}
-                    >
+                    {!isEditing ? (
+                        <>
+                            <span className="text-xl text-center w-full">
+                                {tarea?.nombre}
+                            </span>
+                            <span className="text-lg text-center my-4 w-full flex-1">
+                                {tarea?.contenido}
+                            </span>
+                        </>
+                    ) : (
+                        <form
+                            className="flex flex-col flex-1"
+                            onSubmit={handleGuardar}
+                        >
+                            <input
+                                name="nombre"
+                                className="bg-transparent text-xl text-center w-full outline-none ring-1 ring-gray-400 rounded-md px-2"
+                                type="text"
+                                value={tarea?.nombre}
+                                onInput={handleInput}
+                            />
+                            <textarea
+                                name="contenido"
+                                className="bg-transparent resize-none text-lg text-center my-4 w-full flex-1 outline-none ring-1 ring-gray-400 rounded-md px-2"
+                                value={tarea?.contenido}
+                                onInput={handleInput}
+                            ></textarea>
+                            <input type="submit" hidden />
+                        </form>
+                    )}
+
+                    <div className="flex flex-col sm:flex-row gap-4">
                         {!isEditing ? (
                             <>
-                                <span className="text-xl text-center w-full">
-                                    {tarea.nombre}
-                                </span>
-                                <span className="text-lg text-center my-4 w-full flex-1">
-                                    {tarea.contenido}
-                                </span>
+                                <button
+                                    onClick={handleEditar}
+                                    className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-2 focus:ring-blue-900 outline-none"
+                                >
+                                    Editar
+                                </button>
+                                <Button onClick={cerrarModal}>Cerrar</Button>
                             </>
                         ) : (
-                            <form
-                                className="flex flex-col flex-1"
-                                onSubmit={handleGuardar}
-                            >
-                                <input
-                                    name="nombre"
-                                    className="bg-transparent text-xl text-center w-full outline-none ring-1 ring-gray-400 rounded-md px-2"
-                                    type="text"
-                                    value={tarea.nombre}
-                                    onInput={handleInput}
-                                />
-                                <textarea
-                                    name="contenido"
-                                    className="bg-transparent resize-none text-lg text-center my-4 w-full flex-1 outline-none ring-1 ring-gray-400 rounded-md px-2"
-                                    value={tarea.contenido}
-                                    onInput={handleInput}
-                                ></textarea>
-                                <input type="submit" hidden />
-                            </form>
+                            <>
+                                <Button onClick={handleGuardar}>Guardar</Button>
+                                <Button onClick={handleCancelar}>Cancelar</Button>
+                            </>
                         )}
-
-                        <div className="flex flex-col sm:flex-row gap-4">
-                            {!isEditing ? (
-                                <>
-                                    <button
-                                        onClick={handleEditar}
-                                        className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-2 focus:ring-blue-900 outline-none"
-                                    >
-                                        Editar
-                                    </button>
-                                    <Button onClick={cerrarModal}>Cerrar</Button>
-                                </>
-                            ) : (
-                                <>
-                                    <Button onClick={handleGuardar}>Guardar</Button>
-                                    <Button onClick={handleCancelar}>Cancelar</Button>
-                                </>
-                            )}
-                            <Button onClick={handleBorrar} className="!bg-red-500 focus:ring-red-600">Borrar</Button>
-                        </div>
+                        <Button onClick={handleBorrar} className="!bg-red-500 focus:ring-red-600">Borrar</Button>
                     </div>
                 </div>
-            )}
+            </div>
             {children}
         </modalTareaContext.Provider>
     );
