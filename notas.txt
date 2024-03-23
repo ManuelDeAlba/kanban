@@ -1,3 +1,0 @@
-Agregar nueva tarea
-Al abrir la ventana modal poder editar el contenido
-Poner inputs o textareas sin fondo y que al editar, se cambie el contenido

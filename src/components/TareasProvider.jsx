@@ -16,20 +16,21 @@ function TareasProvider({ children }) {
 
     const [columnas, setColumnas] = useState(["To Do", "Doing", "Done"]);
     const [tareas, setTareas] = useState([]);
-    const [cargadasLS, setCargadasLS] = useState(false);
 
     useEffect(() => {
         const tareasLocalStorage = localStorage.getItem("tareas");
 
         if (tareasLocalStorage) {
             setTareas(JSON.parse(tareasLocalStorage));
-            setCargadasLS(true);
         }
     }, [])
 
     useEffect(() => {
-        // Hasta que las primeras tareas carguen de localStorage, no se guardan para evitar que se borre el contenido
-        if(cargadasLS) localStorage.setItem("tareas", JSON.stringify(tareas));
+        if(tareas.length){
+            localStorage.setItem("tareas", JSON.stringify(tareas));
+        } else {
+            localStorage.removeItem("tareas");
+        }
     }, [tareas])
 
     const crearTarea = columna => {
