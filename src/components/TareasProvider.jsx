@@ -126,12 +126,12 @@ function TareasProvider({ children }) {
             }}
         >
             <div
-                className={`fixed inset-0 w-full h-dvh bg-gray-900/15 flex justify-end items-center overflow-hidden ${
+                className={`fixed inset-0 w-full h-dvh bg-gray-900/15 flex justify-end items-center overflow-hidden z-50 ${
                     !open ? "opacity-0 pointer-events-none delay-300" : ""
                 }`}
             >
                 <div
-                    className={`absolute bg-slate-500 w-[90%] max-w-sm h-full flex flex-col justify-center items-center p-8 text-white rounded-tl-lg rounded-bl-lg transition-transform ${
+                    className={`absolute bg-slate-500 w-[90%] max-w-sm h-full flex flex-col items-center p-8 text-white rounded-tl-lg rounded-bl-lg transition-transform ${
                         !open ? "translate-x-full" : "translate-x-0"
                     }`}
                 >
@@ -140,7 +140,7 @@ function TareasProvider({ children }) {
                             <span className="text-xl text-center w-full">
                                 {tarea?.nombre}
                             </span>
-                            <span className="text-lg text-center my-4 w-full flex-1">
+                            <span className="tarea-contenido text-lg text-center my-4 w-full flex-1 break-words overflow-auto">
                                 {tarea?.contenido}
                             </span>
                         </>

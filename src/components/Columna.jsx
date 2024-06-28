@@ -20,7 +20,7 @@ function Columna({ nombre, tareas }) {
 
     return (
         <aside
-            className="flex flex-col p-4 bg-gray-800 border border-gray-700 rounded-lg"
+            className="flex flex-col self-start p-4 bg-gray-800 border border-gray-700 rounded-lg"
             onDrop={handleDrop}
             onDragOver={handleDragOver}
         >

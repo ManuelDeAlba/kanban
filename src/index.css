@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.tarea-contenido{
+    padding-right: .7em;
+}
+.tarea-contenido::-webkit-scrollbar{
+    width: 5px;
+}
+.tarea-contenido::-webkit-scrollbar-track{
+    background-color: rgb(0 0 0 / .2);
+}
+.tarea-contenido::-webkit-scrollbar-thumb{
+    background-color: rgb(0 0 0 / .3);
+}
