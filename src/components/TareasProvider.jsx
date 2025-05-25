@@ -166,24 +166,39 @@ function TareasProvider({ children }) {
                         </form>
                     )}
 
-                    <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="flex flex-col sm:flex-row flex-wrap gap-4">
                         {!isEditing ? (
                             <>
+                                <select
+                                    className="w-full bg-blue-700 text-center py-2 outline-none rounded-md"
+                                    onInput={(e) => cambiarEstadoTarea(tarea.id, e.target.value)}
+                                >
+                                    {
+                                        columnas.map(columna => (
+                                            <option
+                                                key={columna}
+                                                value={columna}
+                                            >
+                                                {columna}
+                                            </option>
+                                        ))
+                                    }
+                                </select>
                                 <button
                                     onClick={() => handleEditar()}
-                                    className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-2 focus:ring-blue-900 outline-none"
+                                    className="flex-grow text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-2 focus:ring-blue-900 outline-none"
                                 >
                                     Editar
                                 </button>
-                                <Button onClick={cerrarModal}>Cerrar</Button>
+                                <Button className="flex-grow" onClick={cerrarModal}>Cerrar</Button>
                             </>
                         ) : (
                             <>
-                                <Button onClick={handleGuardar}>Guardar</Button>
-                                <Button onClick={handleCancelar}>Cancelar</Button>
+                                <Button className="flex-grow" onClick={handleGuardar}>Guardar</Button>
+                                <Button className="flex-grow" onClick={handleCancelar}>Cancelar</Button>
                             </>
                         )}
-                        <Button onClick={handleBorrar} className="!bg-red-500 focus:ring-red-600">Borrar</Button>
+                        <Button onClick={handleBorrar} className="flex-grow !bg-red-500 focus:ring-red-600">Borrar</Button>
                     </div>
                 </div>
             </div>
