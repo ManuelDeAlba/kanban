@@ -166,7 +166,7 @@ function TareasProvider({ children }) {
                         </form>
                     )}
 
-                    <div className="flex flex-col sm:flex-row flex-wrap gap-4">
+                    <div className="w-full flex flex-col sm:flex-row flex-wrap gap-4">
                         {!isEditing ? (
                             <>
                                 <select
@@ -186,19 +186,19 @@ function TareasProvider({ children }) {
                                 </select>
                                 <button
                                     onClick={() => handleEditar()}
-                                    className="flex-grow text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-2 focus:ring-blue-900 outline-none"
+                                    className="max-w-full flex-grow text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-2 focus:ring-blue-900 outline-none"
                                 >
                                     Editar
                                 </button>
-                                <Button className="flex-grow" onClick={cerrarModal}>Cerrar</Button>
+                                <Button className="max-w-full flex-grow" onClick={cerrarModal}>Cerrar</Button>
                             </>
                         ) : (
                             <>
-                                <Button className="flex-grow" onClick={handleGuardar}>Guardar</Button>
-                                <Button className="flex-grow" onClick={handleCancelar}>Cancelar</Button>
+                                <Button className="max-w-full flex-grow" onClick={handleGuardar}>Guardar</Button>
+                                <Button className="max-w-full flex-grow" onClick={handleCancelar}>Cancelar</Button>
                             </>
                         )}
-                        <Button onClick={handleBorrar} className="flex-grow !bg-red-500 focus:ring-red-600">Borrar</Button>
+                        <Button onClick={handleBorrar} className="max-w-full flex-grow !bg-red-500 focus:ring-red-600">Borrar</Button>
                     </div>
                 </div>
             </div>
